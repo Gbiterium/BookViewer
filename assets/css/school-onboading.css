@@ -1,0 +1,120 @@
+.congrats-page {
+    min-height: 80vh !important;
+    padding-top: 80px !important;
+}
+body, html {
+    min-height: 70vh !important;
+  }
+.about-institution, .school-curriculum, .summary-page {
+    min-height: 80vh !important;
+    padding-top: 120px !important;
+}
+.school-onboarding {
+    margin-bottom: 160px !important;
+    min-height: 60vh !important;
+}
+.notLoggedin {
+    margin-top: 50px !important;
+}
+.loggedin {
+    margin-top: 100px !important;
+}
+.congrats-page {
+    background: url(../img//onboarding//congrats-page-bg.png) no-repeat;
+    background-size: cover;
+}
+.registration-format {
+    /* padding: 0 4vw; */
+    padding-top: 20vh !important;
+    /* min-height: 100vh; */
+    background: #1070B7;
+    position: relative;
+}
+.school-onboarding .btn.btn-outline-primary:not(:disabled):hover {
+    color: #1070b7;
+}
+.school-onboarding .btn.btn-outline-primary:not(:disabled):focus,
+.school-onboarding .btn.btn-outline-primary:not(:disabled):active {
+    color: #1070b7;
+}
+.text-grey-onboarding{
+    color: #6A6A6A;
+}
+.onboarding-footer{
+    position: relative;
+}
+.onboarding-footer .footer-content{
+    background: #B8BCD5;
+    position: absolute;
+    width: 100%;
+    /* bottom: 0; */
+}
+.text-blue {
+    color: #1070B7;
+}
+.bg-blue {
+    background: #1070B7;
+}
+.about-institution .form-control, .school-curriculum .form-control {
+    /* background: #ffffff; */
+    border: 1px solid #e7e8eb;
+    border-radius: 4px;
+    color: #40484f;
+    font-size: 14px;
+    line-height: 100%;
+  }
+.summary-content hr, .congrats-page hr {
+    border: 0.2px solid #b8bcd5 !important;
+    margin: 30px 60px;
+}
+.video-container {
+    aspect-ratio: 16 / 6;
+    /* height: auto; */
+    width: 80%;
+  }
+  .text-decoration-underline {
+    text-decoration: underline;
+  }
+  .modal-footer-class{
+    background: #171E40;
+  }
+  .about-content .vs__selected-options, .curriculum-form .vs__selected-options {
+    padding: 4px 5px !important;
+}
+.about-content .vs--open .vs__open-indicator, .curriculum-form .vs--open .vs__open-indicator {
+    transform: rotate(180deg) scale(0.5);
+}
+.about-content .vs__dropdown-toggle, .curriculum-form .vs__dropdown-toggle {
+    /* white-space: nowrap; */
+    padding: 0 0 0 2px !important;
+}
+.about-content .vs__dropdown-menu, .curriculum-form .vs__dropdown-menu {
+    font-size: 14px;
+    min-width: 50px;
+}
+.about-content .vs__clear, .curriculum-form .vs__clear {
+    padding-bottom: 5px !important;
+    display: none;
+}
+.about-content .vs--single .vs__selected, .curriculum-form .vs--single .vs__selected {
+    font-size: 14px;
+}
+.about-content .vs__search , .curriculum-form .vs__search {
+    font-size: 14px;
+    z-index: 0
+}
+.about-content .vs__actions, .curriculum-form .vs__actions {
+    padding: 0 6px 0 3px;
+}
+.about-content .vs__search:focus , .curriculum-form .vs__search:focus {
+    font-size: 14px;
+}
+.about-content .vs__open-indicator, .curriculum-form .vs__open-indicator {
+    transform: scale(0.5);
+}
+.font-weight-600 {
+    font-weight: 600;
+  }
+   .follow-up .modal-lg {
+    max-width: 600px !important;
+}
