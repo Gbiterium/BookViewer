@@ -118,7 +118,8 @@ export default Vue.extend({
             subject: this.$route.query.subject ? item.subject : "",
             book_format: this.$route.query.format ? item.format : "",
             level: this.$route.query.level ? item.level : "",
-            category: this.$route.query.category ? item.category : "",
+            // category: this.$route.query.category ? item.category : "",
+            ...(this.$route.query.category ? { categories: item.category } : {}),
             end_date: this.$route.query.end_date ? item.end_date :  "",
             start_date: this.$route.query.start_date ? item.start_date :  ""
           },

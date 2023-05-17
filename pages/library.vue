@@ -67,7 +67,8 @@ export default {
             subject: this.$route.query.subject ? this.$route.query.subject || item.subject : "",
             book_format: this.$route.query.format ? item.format : "",
             level: this.$route.query.level ? item.level : "",
-            category: this.$route.query.category ? this.$route.query.category || item.category : "",
+            // category: this.$route.query.category ? this.$route.query.category || item.category : "",
+            ...(this.$route.query.category ? { categories: this.$route.query.category || item.category } : {}),
           },
         });
         this.books = data.data;

@@ -175,7 +175,8 @@ export default {
             subject: this.$route.query.subject ? item.subject : "",
             format: this.$route.query.format ? item.format : "",
             level: this.$route.query.level ? item.level : "",
-            category: this.$route.query.category ? item.category : "",
+            // category: this.$route.query.category ? item.category : "",
+            ...(this.$route.query.category ? { categories: item.category } : {}),
           },
         });
         this.books = data.data;
