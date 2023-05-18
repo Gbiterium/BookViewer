@@ -12,10 +12,10 @@
           <div class="grid-container mt-5">
             <div v-for="n in 5" :key="n" class="">
               <div class="mt-3">
-                <b-skeleton width="172px" height="270px" />
+                <b-skeleton width="170px" height="240px" />
               </div>
               <div class="mt-5">
-                <b-skeleton width="172px" height="270px" />
+                <b-skeleton width="170px" height="240px" />
               </div>
             </div>
           </div>
@@ -24,16 +24,16 @@
       <div v-for="i in categories" :key="i.id" class="my-5">
         <div class="d-flex justify-content-between align-items-center">
           <div class="fs-24 font-weight-600 text-capitalize">{{ i }}</div>
-          <div class="fs-14 pointer" @click.prevent="seeAll(i)">
+          <div v-if="groupedData[i].length > 4" class="fs-14 pointer" @click.prevent="seeAll(i)">
             <span>See More </span>
             <b-icon-chevron-right />
           </div>
         </div>
         <div class="grid-container mt-3">
-          <div v-for="el in groupedData[i]" :key="el.id" class="pointer">
+          <div v-for="el in groupedData[i].slice(0, 5)" :key="el.id" class="pointer">
             <div @click.prevent="handleClick(el)">
               <div class="img-container">
-                <img :src="'data:image/png;base64,' + el.book_cover" />
+                <img :src="`${$config.BASE_URL}${el.book_cover}`" />
               </div>
               <div class="mt-2">
                 <div>{{ el.name }}</div>
@@ -76,7 +76,6 @@ export default Vue.extend({
         });
         return result;
       }, {});
-      console.log(Object.keys(groupedData));
       return groupedData;
     },
     categories() {
@@ -102,10 +101,15 @@ export default Vue.extend({
   methods: {
     ...mapActions("reader", ["LOGIN_READER"]),
     async login() {
+      try {
+      const token = this.$cookies.get('slate-token')
       const response = await this.LOGIN_READER({
-        slate_token: "BWYo17CFELHMrguIQ3LTWxaz13Rj63VYebJHjkwD",
+        slate_token: token,
         school: "560aeb58-f3af-464a-8dab-9192ce4228ca",
       });
+    } catch (error) {
+      console.log(error)
+    }
     },
     async getBookList(item) {
       try {
@@ -148,8 +152,8 @@ export default Vue.extend({
   height: 220px;
 }
 .img-container img {
-  width: 170px;
-  height: 240px;
+  width: 100%;
+  height: 250px;
   object-fit: cover;
   /* object-position: top; */
 }
@@ -159,6 +163,6 @@ export default Vue.extend({
 .grid-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 2rem;
+  gap: 3rem;
 }
 </style>

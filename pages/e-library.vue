@@ -67,20 +67,20 @@
       <div v-for="i in subjects" :key="i.id" class="my-5">
         <div class="d-flex justify-content-between align-items-center">
           <div class="fs-24 font-weight-600 text-capitalize">{{ i }}</div>
-          <div class="fs-14 pointer" @click.prevent="seeAll(i)">
+          <div v-if="groupedData[i].length > 7" class="fs-14 pointer" @click.prevent="seeAll(i)">
             <span>See All </span>
             <b-icon-chevron-right />
           </div>
         </div>
         <div class="grid-container mt-3">
           <div
-            v-for="el in groupedData[i]"
+            v-for="el in groupedData[i].slice(0, 8)"
             :key="el.id"
             class=" pointer"
           >
             <div @click.prevent="handleClick(el)">
               <div class="img-container">
-                <img :src="'data:image/png;base64,' + el.book_cover" />
+                <img :src="`${$config.BASE_URL}${el.book_cover}`" />
               </div>
               <div class="mt-1 fs-12">
                 <div>{{ el.name }}</div>
@@ -197,7 +197,7 @@ export default {
 
 <style scoped>
 .img-container img {
-  width: 120px;
+  width: 100%;
   height: 160px;
   object-fit: cover;
   /* aspect-ratio: 120/160; */

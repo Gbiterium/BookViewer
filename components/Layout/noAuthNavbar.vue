@@ -41,12 +41,12 @@
             <div class>
               <img
                 class="account-image"
-                :src="avatar"
+                :src="user.avatar"
               />
             </div>
             <div class="ml-2">
               <div class="account-name text-left">
-                Nuella Udefi
+                {{ user.first_name }} {{ user.last_name }}
               </div>
               <div class="d-none d-md-block dropdown account-dropdown">
                 <a
@@ -84,15 +84,26 @@ export default {
     return {
       isMobile: false,
       avatar: "https://slate-assets.s3.amazonaws.com/media/slate/profiles/Logo.png",
+      user: {}
     }
   },
   computed: {
     ...mapGetters('auth', ['isLoggedIn'])
   },
+  created () {
+    if(this.$cookies.get('user-details')) {
+      this.user = this.$cookies.get('user-details') 
+    }
+  },
   methods: {
     openMobile() {
       this.isMobile = !this.isMobile
     },
+    logout() {
+      this.$store.dispatch('reader/logout')
+      const url = 'https://slate-staging-bnt8w.ondigitalocean.app/auth/login?viewer=true'
+      window.location.href = url
+    }
     // goToPublisher() {
     //     this.$router.push({path: '/auth/login', query: {publisher: 'true'} })
     // }

@@ -27,6 +27,10 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [ '@/assets/css/all.css'
   ],
+  
+  router: {
+    middleware: 'route-guard'
+  },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
@@ -69,6 +73,9 @@ export default {
   },
   env: {
     BASE_URL: process.env.BASE_URL,
+  },
+  publicRuntimeConfig: {
+    BASE_URL: process.env.BASE_URL
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

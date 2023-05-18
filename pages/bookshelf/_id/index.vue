@@ -3,7 +3,7 @@
         <div class="card">
           <div class="card-body py-xl-5 px-xl-5">
             <div class="row">
-              <div class="col-md-3 left-side">
+              <div class="col-md-4 col-lg-3 left-side">
                 <div v-if="loading">
   <div class="grid-container mt-3">
       <div class="mt-3">
@@ -12,12 +12,13 @@
   </div>
 </div>
                 <div v-else class="thumbnail">
-                <img :src="'data:image/png;base64,' + book.cover">
+                <img :src="book.book_cover">
                 </div>
                 <button class="btn btn-primary mt-4" @click.prevent="addToBookshelf">Add to Bookshelf <b-spinner class="ml-1" v-if="isLoading" label="Spinning" style="width: 1rem; height: 1rem;"></b-spinner></button>
+                <button class="btn btn-outline-primary mt-2" @click.prevent="addToFavorite">Add to Favorite <b-spinner class="ml-1" v-if="isBusy" label="Spinning" style="width: 1rem; height: 1rem;"></b-spinner></button>
                 <button class="btn btn-outline-primary mt-2" @click.prevent="editBook">Preview Snippet</button>
               </div>
-              <div class="col-md-9 details">
+              <div class="col-md-8 col-lg-9 details">
                 <div class="fs-20">{{ book.name }}</div>
                 <div>{{ book.author }}</div>
                 <div class="mt-4">
@@ -29,14 +30,14 @@
             <div v-if="showDetails" class="about-book">
               <div class="mt-2">
               <h4 class="fs-18">About this Book</h4>
-              <p class="fs-14 text-grey">Ut sodales, ex sit amet consectetur accumsan, nibh ex sollicitudin metus, volutpat lacinia arcu nibh vel ante. Proin dapibus dui eget justo tincidunt eleifend. Mauris porta elementum est. Nullam euismod quis libero sed convallis. Vestibulum fringilla felis nec turpis aliquam auctor a a lectus. Etiam porttitor at eros vitae posuere. Suspendisse nec mollis dolor, vel cursus leo. Integer vitae sem vitae leo pretium porta. In consequat magna purus, iaculis rhoncus velit imperdiet sit amet. Fringilla felis nec turpis aliquam auctor a a lectus. Etiam porttitor at eros vitae posuere. Suspendisse nec mollis dolor, vel cursus leo. Integer vitae sem vitae leo pretium porta. In consequat magna purus, iaculis rhoncus velit imperdiet sit amet.</p>
+              <p class="fs-14 text-grey">{{ book.short_description }}</p>
             </div>
             <div class="mt-4">
               <h4 class="fs-18">More Information</h4>
               <table class="mt-3">
   <tr>
     <td>Primary Language</td>
-    <td>{{ book.primary_language }}</td>
+    <td>{{ book.primary_book_language }}</td>
   </tr>
   <tr>
     <td>Curriculum</td>
@@ -52,7 +53,7 @@
   </tr>
   <tr>
     <td>Category</td>
-    <td>{{ book.category ? book.category.join(", ") : ''}}</td>
+    <td>{{ book.categories ? book.categories.join(", ") : ''}}</td>
   </tr>
   <tr>
     <td>Format</td>
@@ -68,7 +69,7 @@
   </tr>
   <tr>
     <td>Published</td>
-    <td>{{ formatDate(book.published) }}</td>
+    <td>{{ formatDate(book.publication_date) }}</td>
   </tr>
 </table>
             </div>
@@ -113,7 +114,7 @@
                 <span class="mr-2">{{ el.title }}</span>
                   <star-rating class="mb-2" :show-rating="false" :rating="el.rating" :star-size="14" :padding="5" :read-only="true" active-color="#FF9C09"></star-rating>
               </div>
-              <div><span class="text-grey">by</span> Nuella Udefi - <span class="text-grey">{{ formatDate(el.date_created) }}</span></div>
+              <div><span class="text-grey">by</span> {{ user.first_name }} {{ user.last_name }} - <span class="text-grey">{{ formatDate(el.date_created) }}</span></div>
               <p class="text-grey capitalize mt-1">{{ el.review_text }}</p>
               </div>
                 </div>
@@ -176,17 +177,22 @@
         review: '',
         averageRating: 0,
         reviews: [],
-        isLoading: false
+        isLoading: false,
+        isBusy: false,
+        user: {}
       }
     },
     async fetch () {
       try {
         this.loading = true
-        const { data } = await this.$axios.get(`/app/publisher/book/${this.$route.params.id}/`)
+        const { data } = await this.$axios.get(`/app/fetch_book/${this.$route.params.id}/`)
         this.book = data
-        this.subjects = data.subjects.map((el) => el.name)
+        this.subjects = data.subject.map((el) => el.name)
         this.curriculums = data.curriculum.map((el) => el.name)
         await this.getReview()
+        if (this.$cookies.get('user-details')) {
+          this.user = this.$cookies.get('user-details')
+        }
       } catch (error) {
         console.log(error)
       } finally {
@@ -246,6 +252,22 @@
           console.log(error)
         } finally {
           this.isLoading = false
+        }
+      },
+      async addToFavorite () {
+        try{
+          this.isBusy = true
+        const response = await this.$axios.get(`/app/book/${this.$route.params.id}/add_to_favorites`)
+        if (response.status === 200) {
+          this.$toast({
+            type: 'success',
+            text: 'book successfully added to favorites'
+          })
+        }
+        } catch (error) {
+          console.log(error)
+        } finally {
+          this.isBusy = false
         }
       },
       editBook() {

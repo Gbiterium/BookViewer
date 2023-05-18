@@ -1,6 +1,7 @@
 const state = () => ({
     books: [],
-    readerDetails: {}
+    readerDetails: {},
+    isLoggedIn: false
 })
 
 export default state

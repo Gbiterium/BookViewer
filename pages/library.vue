@@ -21,7 +21,7 @@
           >
             <div @click.prevent="handleClick(el)">
               <div class="img-container">
-                <img :src="'data:image/png;base64,' + el.book_cover" />
+                <img :src="`${$config.BASE_URL}${el.book_cover}`" />
               </div>
               <div class="mt-1 fs-12">
                 <div>{{ el.name }}</div>
@@ -87,7 +87,7 @@ export default {
 
 <style scoped>
 .img-container img {
-  width: 120px;
+  width: 100%;
   height: 160px;
   object-fit: cover;
   /* aspect-ratio: 120/160; */

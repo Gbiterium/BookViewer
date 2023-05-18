@@ -17,6 +17,11 @@ const actions = {
     } catch (error) {
       console.log(error)
     }
+  },
+  logout ({ commit }) {
+    commit('logout')
+    this.$cookies.remove('reader-token')
+    this.$cookies.remove('slate-token')
   }
 };
 
