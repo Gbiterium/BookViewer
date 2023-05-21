@@ -6,7 +6,7 @@ html {
   background: #FAFAFA;
   font-size: 16px;
   min-height: 100vh;
-  /* overflow-x: hidden; */
+  overflow-x: hidden;
 }
 
 .new-libray-container {
@@ -1285,7 +1285,7 @@ svg.iconify svg.dark {
 
 .site-sidebar {
   background: #fff;
-  width: 230px;
+  width: 17vw;
   height: 100%;
 
   /* padding-top: calc(var(--navbar-height) + var(--topbar-height)); */
@@ -1457,7 +1457,7 @@ svg.iconify svg.dark {
   color: #1070b7;
 }
 .site-sidebar:hover {
-  width: var(--sidebar-width);
+  /* width: var(--sidebar-width); */
 }
 
 .site-sidebar:hover .nav-item .nav-item-text {
@@ -1742,7 +1742,7 @@ svg.iconify svg.dark {
   .site-container.site-container-style-2 {
     width: calc(100vw - 0px);
     margin-left: 0px;
-    padding: 2rem 1rem;
+    padding: 2rem 1rem 2rem 2rem;
   }
 }
 

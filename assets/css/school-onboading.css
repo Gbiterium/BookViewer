@@ -2,9 +2,6 @@
     min-height: 80vh !important;
     padding-top: 80px !important;
 }
-body, html {
-    min-height: 70vh !important;
-  }
 .about-institution, .school-curriculum, .summary-page {
     min-height: 80vh !important;
     padding-top: 120px !important;

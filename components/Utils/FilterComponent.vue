@@ -1,5 +1,5 @@
 <template>
-  <div class="filter-sidebar site-sidebar">
+  <div class="filter-sidebar site-sidebar d-none d-md-block">
     <div class="card">
       <div class="card-body">
         <div class="d-flex justify-content-between align-items-center px-3">
@@ -242,10 +242,10 @@ export default {
 </script>
 
 <style scoped>
-.card {
+/* .card {
   width: 230px;
   height: 800px;
-}
+} */
 .card-body {
   padding: 1.25rem 0 !important;
 }

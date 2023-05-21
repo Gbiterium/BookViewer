@@ -31,6 +31,9 @@ export default {
   router: {
     middleware: 'route-guard'
   },
+  
+  // Global Transition (default)
+  pageTransition: 'slide-bottom',
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
