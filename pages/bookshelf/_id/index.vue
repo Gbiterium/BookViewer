@@ -210,8 +210,8 @@
                         <div v-if="reviews.length > 0" class="fs-14">
                           <div v-for="el in reviews" :key="el.id">
                             <div class="mb-4">
-                              <div class="d-flex align-items-center">
-                                <div class="mobile-top">
+                              <div class="d-flex align-items-center mobile-top">
+                                <!-- <div class="mobile-top"> -->
                                 <span class="mr-2">{{ el.title }}</span>
                                 <star-rating
                                   class="mb-2"
@@ -222,7 +222,7 @@
                                   :read-only="true"
                                   active-color="#FF9C09"
                                 ></star-rating>
-                                </div>
+                                <!-- </div> -->
                               </div>
                               <div>
                                 <span class="text-grey">by</span>
