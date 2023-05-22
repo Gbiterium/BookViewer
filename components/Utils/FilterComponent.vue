@@ -227,6 +227,8 @@ export default {
       this.category = "";
       this.start_date = "";
       this.end_date = "";
+      this.$route.query.level = ""
+      this.$route.query.category = ""
 
       this.$router.push({
         query: {},

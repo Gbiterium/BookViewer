@@ -156,13 +156,14 @@ export default {
       this.$router.push(`/bookshelf/${item.id}`);
     },
     async filterByGrade(item) {
-      this.loading = true;
-      const { data } = await this.$axios.get('/app/list_books/', { params: {
-        level: item,
-      }
-      });
-      this.books = data.data;
-      this.loading = false;
+      this.$router.push({query: {level: item}})
+      // this.loading = true;
+      // const { data } = await this.$axios.get('/app/list_books/', { params: {
+      //   level: item,
+      // }
+      // });
+      // this.books = data.data;
+      // this.loading = false;
     },
     async getBookList(item) {
       try {

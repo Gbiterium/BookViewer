@@ -29,8 +29,8 @@
       <div>2</div>
       <div>3</div>
       <div>4</div> -->
-        <div class="pr-md-3"><img src="@/assets/img/category1.png" /></div>
-        <div><img src="@/assets/img/category2.png" /></div>
+        <div class="pr-md-3 pointer"><img src="@/assets/img/category1.png" /></div>
+        <div class="pointer"><img src="@/assets/img/category2.png" /></div>
       </VueSlickCarousel>
       <!-- <div class="col-lg-6">
       </div>
@@ -158,6 +158,16 @@ export default Vue.extend({
         console.log(error);
       }
     },
+    // filterByFiction() {
+    //   this.$router.push({
+    //     query: {category: 'fiction'}
+    //   })
+    // },
+    // filterByHistorical() {
+    //   this.$router.push({
+    //     query: {category: 'historical'}
+    //   })
+    // },
     isMobileDevice() {
       if (window.innerWidth <= 767) {
         this.isMobile = true;
