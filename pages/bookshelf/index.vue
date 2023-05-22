@@ -180,14 +180,14 @@ export default {
     },
     async handleOnSelectTab(e) {
       if (e === "All") {
-        await this.getBooks();
+        // await this.getBooks();
         this.all = true
       }
       // if (e === "Reading") {
 
       // }
       if (e === "Favorite") {
-        await this.getFavorites()
+        // await this.getFavorites()
         this.all = false
       }
     },
