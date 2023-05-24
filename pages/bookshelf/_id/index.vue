@@ -1,5 +1,5 @@
 <template>
-  <div class="container book">
+  <div class="container-fluid book">
     <div class="card">
       <div class="card-body py-xl-5 px-xl-5">
         <div class="row">
@@ -46,8 +46,8 @@
             </button>
           </div>
           <div class="col-md-8 col-lg-9 details">
-            <div class="fs-20">{{ book.name }}</div>
-            <div>{{ book.author }}</div>
+            <div class="fs-20 book-name">{{ book.name }}</div>
+            <div class="author-name">{{ book.author }}</div>
             <div class="mt-4">
               <UtilsBaseCardTab @tab-selected="handleOnSelectTab($event)">
                 <template
@@ -58,7 +58,8 @@
                       <div class="mt-2">
                         <h4 class="fs-18">About this Book</h4>
                         <p class="fs-14 text-grey">
-                          {{ book.short_description }}
+                          <!-- {{ book.short_description }} -->
+                          Ut sodales, ex sit amet consectetur accumsan, nibh ex sollicitudin metus, volutpat lacinia arcu nibh vel ante. Proin dapibus dui eget justo tincidunt eleifend. Mauris porta elementum est. Nullam euismod quis libero sed convallis. Vestibulum fringilla felis nec turpis aliquam auctor a a lectus. Etiam porttitor at eros vitae posuere. Suspendisse nec mollis dolor, vel cursus leo. Integer vitae sem vitae leo pretium porta. In consequat magna purus, iaculis rhoncus velit imperdiet sit amet. Fringilla felis nec turpis aliquam auctor a a lectus. Etiam porttitor at eros vitae posuere. Suspendisse nec mollis dolor, vel cursus leo. Integer vitae sem vitae leo pretium porta. In consequat magna purus, iaculis rhoncus velit imperdiet sit amet.
                         </p>
                       </div>
                       <div class="mt-4">
@@ -477,6 +478,21 @@ th {
 tr:nth-child(odd) {
   background-color: #f8f8f8;
 }
+.author-name {
+  font-weight: 300
+}
+.book-name {
+  font-weight: 400;
+}
+td:nth-child(1) {
+                width: 25%;
+                font-weight: 600;
+                color: #8f9aa3;
+            }
+            td:nth-child(2) {
+                width: 75%;
+                font-weight: 400
+            }
 small {
   font-size: 12px !important;
 }
