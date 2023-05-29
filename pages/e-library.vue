@@ -2,9 +2,25 @@
   <div>
     <div>
       <h4 class="fs-24 font-weight-600">Browse by Grades</h4>
-      <div class="grades row">
+      <div class="grades">
+        <VueSlickCarousel
+        :arrows="true"
+        :dots="true"
+        :slidesToShow="5"
+        :slidesToScroll="5"
+        :infinite="true"
+        :responsive="[
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+            },
+          },
+        ]"
+      >
         <div
-          class="grade-container pointer col-lg-2"
+          class="grade-container pointer pr-3"
           v-for="el in level"
           :key="el.id"
         >
@@ -15,6 +31,7 @@
             </div>
           </div>
         </div>
+      </VueSlickCarousel>
         <!-- <div class="grade-container pointer col-lg-2">
             <img src="@/assets/img/level2.png">
             <div class="d-flex justify-content-center">
@@ -83,9 +100,10 @@
                 <img :src="`${$config.BASE_URL}${el.book_cover}`" />
               </div>
               <div class="mt-1 fs-12">
-                <div>{{ el.name }}</div>
-                <div class="text-grey book-details">{{ el.author }}</div>
-                <div class="text-grey book-details">
+                <div v-if="isMobile" class="text-capitalize">{{ truncate(el.name, 23) }}</div>
+                <div v-else class="text-capitalize">{{ truncate(el.name, 65) }}</div>
+                <div class="text-grey text-capitalize book-details d-none d-md-block">{{ el.author }}</div>
+                <div class="text-grey text-capitalize book-details d-none d-md-block">
                   {{ el.level.join(", ") }}
                 </div>
               </div>
@@ -100,14 +118,20 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import _ from "lodash";
+import VueSlickCarousel from "vue-slick-carousel";
+import "vue-slick-carousel/dist/vue-slick-carousel.css";
+// optional style for arrows & dots
+import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 export default {
   layout: "authWithoutTopbar",
+  components: { VueSlickCarousel },
   data() {
     return {
       // subjects: ['Economics', 'Geography', 'Science'],
       loading: false,
       level: ["Primary 1", "Primary 2"],
       books: [],
+      isMobile: false,
     };
   },
   computed: {
@@ -146,8 +170,9 @@ export default {
       },
     },
   },
-  async created() {
+  async mounted() {
     await this.getBookList();
+    await this.isMobileDevice()
   },
   methods: {
     ...mapActions("reader", ["GET_BOOKS"]),
@@ -164,6 +189,16 @@ export default {
       // });
       // this.books = data.data;
       // this.loading = false;
+    },
+    isMobileDevice() {
+      if (window.innerWidth <= 767) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    },
+    truncate(source, size) {
+        return source.length > size ? source.slice(0, size - 1) + "…" : source;
     },
     async getBookList(item) {
       try {
@@ -205,6 +240,7 @@ export default {
 }
 .grades img {
   width: 100%;
+  height: 99px;
 }
 .grade-container {
   position: relative;
@@ -218,5 +254,18 @@ export default {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 1rem;
+}
+@media screen and (max-width: 767px) {
+  .grid-container {
+    overflow: auto;
+    gap: 10px;
+  }
+  .img-container img {
+    height: 170px;
+    width: 110px;
+  }
+  .grade-abs{
+    font-size: 12px;
+  }
 }
 </style>

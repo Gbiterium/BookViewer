@@ -188,7 +188,7 @@ html {
   color: #fff;
 }
 
-.modal-overlay {
+/* .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -197,7 +197,7 @@ html {
   height: -webkit-fill-available;
   opacity: 0;
   background: none;
-}
+} */
 
 /* .borderfulltop {
   border-top: 7px solid #171e40;
@@ -302,11 +302,14 @@ html {
   }
 }
 
-/* @media screen and (max-width: 991px) {
-  .fixedcontainer {
-    right: 10px;
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  nav {
+    position: absolute;
+    z-index: 1001;
+    background: #171e40;
+    width: 100vw;
   }
-} */
+}
 @media screen and (max-width: 698px) {
   .logo {
     height: 20px;
@@ -315,6 +318,12 @@ html {
   .svgsize {
     width: 25px;
     height: 25px;
+  }
+  nav {
+    position: absolute;
+    z-index: 1001;
+    background: #171e40;
+    width: 100%;
   }
 }
 @media screen and (max-width: 408px) {

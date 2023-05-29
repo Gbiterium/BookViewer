@@ -5,7 +5,7 @@
         <div class="row">
           <div class="col-md-4 col-lg-3 left-side">
             <div v-if="loading">
-              <div class="grid-container mt-3">
+              <div class="mt-3">
                 <div class="mt-3">
                   <b-skeleton width="100%" height="338px" />
                 </div>
@@ -46,8 +46,8 @@
             </button>
           </div>
           <div class="col-md-8 col-lg-9 details">
-            <div class="fs-20 book-name">{{ book.name }}</div>
-            <div class="author-name">{{ book.author }}</div>
+            <div class="fs-20 book-name text-capitalize">{{ book.name }}</div>
+            <div class="author-name text-capitalize">{{ book.author }}</div>
             <div class="mt-4">
               <UtilsBaseCardTab @tab-selected="handleOnSelectTab($event)">
                 <template
@@ -99,10 +99,10 @@
                             <td>Format</td>
                             <td>{{ book.format }}</td>
                           </tr>
-                          <tr>
+                          <!-- <tr>
                             <td>Size</td>
                             <td>{{ book.size }}</td>
-                          </tr>
+                          </tr> -->
                           <tr>
                             <td>Pages</td>
                             <td>{{ book.number_of_pages }}</td>
@@ -113,12 +113,44 @@
                           </tr>
                         </table>
                       </div>
-                      <!-- <div class="mt-4">
-              <h4 class="fs-18">More From Author</h4>
-              <div class="row mt-3">
-
+                      <div v-if="related.length > 0" class="mt-4">
+              <h4 class="fs-18">Related Books</h4>
+              <div class="grid-container mt-3">
+                <div v-for="el in related" :key="el.id" class="">
+                  <div class="img-container">
+                <img :src="`${$config.BASE_URL}${el.book_cover}`" />
               </div>
-            </div> -->
+              <div class="mt-2 fs-12">
+                <div class="text-capitalize">{{ el.name }}</div>
+                <div class="text-grey text-capitalize book-details d-none d-md-block">
+                  {{ el.author }}
+                </div>
+                <div class="text-grey text-capitalize book-details d-none d-md-block">
+                  {{ el.level.join(", ") }}
+                </div>
+                </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="moreFromAuthor.length > 0" class="mt-4">
+              <h4 class="fs-18">More From Author </h4>
+              <div class="grid-container mt-3">
+                <div v-for="el in moreFromAuthor" :key="el.id" class="">
+                  <div class="img-container">
+                <img :src="`${$config.BASE_URL}${el.book_cover}`" />
+              </div>
+              <div class="mt-2 fs-12">
+                <div class="text-capitalize">{{ el.name }}</div>
+                <div class="text-grey text-capitalize book-details d-none d-md-block">
+                  {{ el.author }}
+                </div>
+                <div class="text-grey text-capitalize book-details d-none d-md-block">
+                  {{ el.level.join(", ") }}
+                </div>
+                </div>
+                </div>
+              </div>
+            </div>
                     </div>
                     <div v-if="showRating" class="rating mt-2">
                       <h4 class="fs-18">Student Rating and Reviews</h4>
@@ -307,6 +339,8 @@ export default {
       isLoading: false,
       isBusy: false,
       user: {},
+      related: '',
+      moreFromAuthor: []
     };
   },
   async fetch() {
@@ -319,7 +353,8 @@ export default {
       this.subjects = data.subject.map((el) => el.name);
       this.curriculums = data.curriculum.map((el) => el.name);
       await this.getReview();
-      // await this.getMoreFromAuthor()
+      await this.getRelatedBooks()
+      await this.getMoreFromAuthor()
       if (this.$cookies.get("user-details")) {
         this.user = this.$cookies.get("user-details");
       }
@@ -372,10 +407,20 @@ export default {
     },
     async getMoreFromAuthor() {
       try {
-        const response = await this.$axios.get(
-          `/app/more_from_author?author_name=${this.book.author}`
+        const { data } = await this.$axios.get(
+          `/app/book/${this.$route.params.id}/more_from_author/`
         );
-        console.log(response);
+        this.moreFromAuthor = data.data
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getRelatedBooks() {
+      try {
+        const { data } = await this.$axios.get(
+          `/app/book/${this.$route.params.id}/related_books`
+        );
+        this.related = data.data
       } catch (error) {
         console.log(error);
       }
@@ -452,6 +497,15 @@ export default {
   width: 100%;
   object-fit: cover;
 }
+.img-container img {
+  width: 100%;
+  height: 160px;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+}
 .book {
   animation: slide-fade 0.5s ease-out 0s;
 }
@@ -506,6 +560,23 @@ small {
 .btn-abs {
   position: absolute;
   right: 0;
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  td:nth-child(1) {
+                width: 50%;
+            }
+            td:nth-child(2) {
+                width: 50%;
+            }
+            .img-container img {
+    height: 170px;
+    width: 110px;
+    /* object-position: top; */
+  }
+  .grid-container {
+  gap: 1rem;
+  /* overflow: auto */
+}
 }
 @media screen and (max-width: 767px) {
   .thumbnail img {

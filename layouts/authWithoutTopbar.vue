@@ -15,8 +15,8 @@
 
     <Transition v-else name="slide-fade">
       <div class="site-nav col-md-2">
-        <UtilsFilterComponent />
         <Navbar />
+        <UtilsFilterComponent />
       </div>
     </Transition>
     <Transition name="slide-fade">

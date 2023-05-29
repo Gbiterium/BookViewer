@@ -24,9 +24,10 @@
                 <img :src="`${$config.BASE_URL}${el.book_cover}`" />
               </div>
               <div class="mt-1 fs-12">
-                <div>{{ el.name }}</div>
-                <div class="text-grey book-details">{{ el.author }}</div>
-                <div class="text-grey book-details">
+                <div v-if="isMobile" class="text-capitalize">{{ truncate(el.name, 23) }}</div>
+                <div v-else class="text-capitalize">{{ truncate(el.name, 65) }}</div>
+                <div class="text-grey text-capitalize book-details d-none d-md-block">{{ el.author }}</div>
+                <div class="text-grey text-capitalize book-details d-none d-md-block">
                   {{ el.level.join(", ") }}
                 </div>
               </div>
@@ -43,6 +44,7 @@ export default {
         return {
             books: [],
             loading: false,
+            isMobile: false,
         }
     },
     watch: {
@@ -54,6 +56,7 @@ export default {
   },
   async created () {
     await this.getBook()
+    await this.isMobileDevice()
   },
   methods: {
         async getBook(item) {
@@ -81,6 +84,16 @@ export default {
     handleClick(item) {
       this.$router.push(`/bookshelf/${item.id}`);
     },
+    isMobileDevice() {
+      if (window.innerWidth <= 767) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    },
+    truncate(source, size) {
+        return source.length > size ? source.slice(0, size - 1) + "…" : source
+    },
 }
 }
 </script>
@@ -96,5 +109,14 @@ export default {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 1rem;
+}
+@media screen and (max-width: 767px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .img-container img {
+    height: 140px;
+    width: 100%;
+  }
 }
 </style>

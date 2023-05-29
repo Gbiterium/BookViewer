@@ -7,7 +7,7 @@
           <UtilsCardTab :key="index" :title="tab">
             <div v-if="loading">
               <div class="row mt-3">
-                <div v-for="n in 4" :key="n" class="col-lg-3">
+                <div v-for="n in 4" :key="n" class="col-md-6 col-lg-3">
                   <div class="mt-3">
                     <b-skeleton width="100%" height="109px" />
                   </div>
@@ -16,7 +16,7 @@
             </div>
             <div v-if="show && !loading" class="card-body card-area">
               <div class="row mb-4">
-                <div class="col-lg-3 small-card mb-3">
+                <div class="col-md-6 col-lg-3 small-card mb-3">
                   <div class="card">
                     <div class="card-body">
                       <h5 class="fs-12">BOOKS</h5>
@@ -26,7 +26,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-3 small-card mb-3">
+                <div class="col-md-6 col-lg-3 small-card mb-3">
                   <div class="card">
                     <div class="card-body">
                       <h5 class="fs-12">FAVORITE</h5>
@@ -34,7 +34,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-3 small-card mb-3">
+                <div class="col-md-6 col-lg-3 small-card mb-3">
                   <div class="card">
                     <div class="card-body">
                       <h5 class="fs-12">TOTAL STUDY TIME</h5>
@@ -42,7 +42,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-3 small-card mb-3">
+                <div class="col-md-6 col-lg-3 small-card mb-3">
                   <div class="card">
                     <div class="card-body">
                       <h5 class="fs-12 text-uppercase">Top Subject</h5>
@@ -58,9 +58,10 @@
                       <img :src="`${$config.BASE_URL}${el.book_cover}`" />
                     </div>
                     <div class="mt-1 fs-12">
-                      <div>{{ el.name }}</div>
-                      <div class="text-grey book-details">{{ el.author }}</div>
-                      <div class="text-grey book-details">
+                      <div v-if="isMobile" class="text-capitalize">{{ truncate(el.name, 23) }}</div>
+                <div v-else class="text-capitalize">{{ truncate(el.name, 65) }}</div>
+                      <div class="text-grey book-details d-none d-md-block">{{ el.author }}</div>
+                      <div class="text-grey book-details d-none d-md-block">
                         {{ el.level.join(", ") }}
                       </div>
                     </div>
@@ -74,9 +75,10 @@
                       <img :src="`${$config.BASE_URL}${el.book_cover}`" />
                     </div>
                     <div class="mt-1 fs-12">
-                      <div>{{ el.name }}</div>
-                      <div class="text-grey book-details">{{ el.author }}</div>
-                      <div class="text-grey book-details">
+                      <div v-if="isMobile" class="text-capitalize">{{ truncate(el.name, 23) }}</div>
+                <div v-else class="text-capitalize">{{ truncate(el.name, 65) }}</div>
+                      <div class="text-grey book-details d-none d-md-block">{{ el.author }}</div>
+                      <div class="text-grey book-details d-none d-md-block">
                         {{ el.level.join(", ") }}
                       </div>
                     </div>
@@ -121,7 +123,8 @@ export default {
       loading: false,
       show: true,
       favorites: [],
-      all: false
+      all: false,
+      isMobile: false
     };
   },
   watch: {
@@ -131,9 +134,10 @@ export default {
       },
     },
   },
-  async created() {
+  async mounted() {
     await this.getBooks();
     await this.getFavorites()
+    await this.isMobileDevice()
   },
   methods: {
     handleClick(item) {
@@ -169,6 +173,16 @@ export default {
       } finally {
         this.loading = false;
       }
+    },
+    isMobileDevice() {
+      if (window.innerWidth <= 767) {
+        this.isMobile = true;
+      } else {
+        this.isMobile = false;
+      }
+    },
+    truncate(source, size) {
+        return source.length > size ? source.slice(0, size - 1) + "…" : source;
     },
     async getFavorites() {
       try{
@@ -221,5 +235,15 @@ export default {
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   gap: 1rem;
+}
+@media screen and (max-width: 767px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .img-container img {
+    height: 120px;
+    width: 100%;
+  }
 }
 </style>

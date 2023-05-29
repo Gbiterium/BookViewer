@@ -29,8 +29,8 @@
       <div>2</div>
       <div>3</div>
       <div>4</div> -->
-        <div class="pr-md-3 pointer"><img src="@/assets/img/category1.png" /></div>
-        <div class="pointer"><img src="@/assets/img/category2.png" /></div>
+        <div class="pr-md-3 pointer" @click.prevent="filterByFiction"><img src="@/assets/img/category1.png" /></div>
+        <div class="pointer" @click.prevent="filterByHistorical"><img src="@/assets/img/category2.png" /></div>
       </VueSlickCarousel>
       <!-- <div class="col-lg-6">
       </div>
@@ -73,12 +73,12 @@
                 <img :src="`${$config.BASE_URL}${el.book_cover}`" />
               </div>
               <div class="mt-2">
-                <div v-if="isMobile">{{ truncate(el.name, 23) }}</div>
-                <div v-else>{{ el.name }}</div>
-                <div class="text-grey book-details d-none d-md-block">
+                <div v-if="isMobile" class="text-capitalize">{{ truncate(el.name, 23) }}</div>
+                <div v-else class="text-capitalize">{{ truncate(el.name, 65) }}</div>
+                <div class="text-grey text-capitalize book-details d-none d-md-block">
                   {{ el.author }}
                 </div>
-                <div class="text-grey book-details d-none d-md-block">
+                <div class="text-grey text-capitalize book-details d-none d-md-block">
                   {{ el.level.join(", ") }}
                 </div>
               </div>
@@ -158,16 +158,16 @@ export default Vue.extend({
         console.log(error);
       }
     },
-    // filterByFiction() {
-    //   this.$router.push({
-    //     query: {category: 'fiction'}
-    //   })
-    // },
-    // filterByHistorical() {
-    //   this.$router.push({
-    //     query: {category: 'historical'}
-    //   })
-    // },
+    filterByFiction() {
+      this.$router.push({
+        query: {category: 'fiction'}
+      })
+    },
+    filterByHistorical() {
+      this.$router.push({
+        query: {category: 'historical'}
+      })
+    },
     isMobileDevice() {
       if (window.innerWidth <= 767) {
         this.isMobile = true;
@@ -204,11 +204,7 @@ export default Vue.extend({
       }
     },
     truncate(source, size) {
-      if (window.innerWidth <= 768) {
         return source.length > size ? source.slice(0, size - 1) + "…" : source;
-      } else {
-        return;
-      }
     },
     handleClick(item) {
       this.$router.push(`/bookshelf/${item.id}`);
@@ -242,6 +238,20 @@ export default Vue.extend({
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 3rem;
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .img-container img {
+    height: 170px;
+    width: 110px;
+    /* object-position: top; */
+  }
+  .grid-container {
+  gap: 1rem;
+}
+.feature-book img {
+  height: 150px;
+  margin-top: 20px
+}
 }
 @media screen and (max-width: 767px) {
   .grid-container {

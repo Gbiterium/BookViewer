@@ -1009,7 +1009,7 @@ svg.iconify svg.dark {
 
 /* Modals */
 
-.modal-overlay {
+/* .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -1017,7 +1017,7 @@ svg.iconify svg.dark {
   width: -webkit-fill-available;
   height: -webkit-fill-available;
   background: rgba(0, 0, 0, 0.2);
-}
+} */
 
 .custom-modal {
   z-index: 999;
@@ -3334,6 +3334,34 @@ svg.iconify svg.dark {
   }
   .mybtn {
     font-size: 10px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .img-container img {
+    height: 170px !important;
+    width: 110px !important;
+    /* object-position: top; */
+  }
+  .grid-container {
+  gap: 1rem !important;
+}
+.feature-book img {
+  height: 150px !important;
+  margin-top: 20px !important
+}
+}
+@media screen and (max-width: 767px) {
+  .grid-container {
+    overflow: auto !important;
+    gap: 10px !important;
+  }
+  .feature-book img {
+  height: 170px !important;
+}
+  .img-container img {
+    height: 170px !important;
+    width: 110px !important;
+    /* object-position: top; */
   }
 }
 
