@@ -255,6 +255,11 @@ export default {
   grid-template-columns: repeat(8, 1fr);
   gap: 1rem;
 }
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .grades img {
+    height: auto;
+  }
+}
 @media screen and (max-width: 767px) {
   .grid-container {
     overflow: auto;
@@ -264,6 +269,9 @@ export default {
     height: 170px;
     width: 110px;
   }
+  .grades img {
+  height: auto;
+}
   .grade-abs{
     font-size: 12px;
   }

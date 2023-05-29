@@ -593,5 +593,14 @@ small {
     display: flex;
     align-items: center;
   }
+  td:nth-child(1) {
+                width: 50%;
+            }
+            td:nth-child(2) {
+                width: 50%;
+            }
+            .about-book p {
+              font-size: 12px !important;
+            }
 }
 </style>
